@@ -27,7 +27,7 @@ const addOne = async (req, res, next) => {
 const deleteOne = async (req, res, next) => {
   try {
     const deletedTeacher = await teacherService.deleteTeacher(req.params.id);
-    res.status(200).json(deletedTeacher);
+    res.status(204).json(deletedTeacher);
   } catch (error) {
     next(error);
   }
