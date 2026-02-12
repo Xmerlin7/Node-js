@@ -20,6 +20,12 @@
       "subject": "English",
       "email": "lina.youssef@example.com",
       "yearsOfExperience": 11
+    },
+    {
+      "id": 4,
+      "name": "magnus carlsen",
+      "email": "magnus@example.com",
+      "subject": "Mathematics"
     }
   ]
 }
