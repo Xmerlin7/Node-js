@@ -14,7 +14,7 @@ export const getTeacherByID = async (id) => {
   if (teacher.length != 1) return null;
   else return teacher;
 };
-export const addTeacher = async ({ name, email, subject, experience }) => {
+export const addTeacher = async ({ name, email, subject, yearsOfExperience }) => {
   const data = await Teacher.getAll();
   const list = data.teachers;
 
@@ -36,7 +36,7 @@ export const addTeacher = async ({ name, email, subject, experience }) => {
     name,
     email,
     subject,
-    experience,
+    yearsOfExperience,
   };
 
   list.push(newTeacher);
@@ -44,4 +44,36 @@ export const addTeacher = async ({ name, email, subject, experience }) => {
   await Teacher.saveAll(data);
 
   return newTeacher;
+};
+export const deleteTeacher = async (id) => {
+  const data = await Teacher.getAll();
+  let teachers = data.teachers;
+  let teacher = teachers.find((t) => t.id == id);
+  if (!teacher) throw new Error("this teacher is not in out dataset");
+  let newTeachers = teachers.filter((t) => t.id !== id);
+  await Teacher.saveAll({ teachers: newTeachers });
+  return teacher;
+};
+export const updateTeacher = async (
+  id,
+  { name, email, subject, yearsOfExperience },
+) => {
+  const data = await Teacher.getAll();
+  let teachers = data.teachers;
+  let teacher = teachers.find((t) => t.id == id);
+  if (!teacher) throw new Error("this teacher is not in out dataset");
+  let newTData = {
+    id,
+    name,
+    email,
+    subject,
+    yearsOfExperience,
+  };
+  for (let i = 0; i < teachers.length; i++) {
+    if (teacher.id == teachers[i].id) {
+      teachers[i] = newTData;
+    }
+  }
+  await Teacher.saveAll({ teachers });
+  return newTData;
 };
