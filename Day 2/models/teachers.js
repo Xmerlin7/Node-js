@@ -10,9 +10,22 @@ export default class Teacher {
     this.subject = subject;
     this.experience = experience;
   }
-
-  static async getAll() {
-    let data = await fs.readFile(path.join(Root_Dir, "data", "teachers.json"), "utf-8")
+  static async readfile() {
+    let data = await fs.readFile(
+      path.join(Root_Dir, "data", "teachers.json"),
+      "utf-8",
+    );
     return JSON.parse(data);
+  }
+  static async getAll() {
+    let teachers = await this.readfile();
+    return teachers;
+  }
+
+  static async saveAll(teachers) {
+    await fs.writeFile(
+      path.join(Root_Dir, "data", "teachers.json"),
+      JSON.stringify(teachers),
+    );
   }
 }
