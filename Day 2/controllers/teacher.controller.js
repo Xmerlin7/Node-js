@@ -26,13 +26,19 @@ const addOne = async (req, res, next) => {
 };
 const deleteOne = async (req, res, next) => {
   try {
+    const deletedTeacher = await teacherService.deleteTeacher(req.params.id);
+    res.status(200).json(deletedTeacher);
   } catch (error) {
     next(error);
   }
 };
 const updateOne = async (req, res, next) => {
   try {
-    await teacherService.addTeacher(req.body);
+    const updateTeacher = await teacherService.updateTeacher(
+      req.params.id,
+      req.body,
+    );
+    return res.status(200).json({ updateTeacher });
   } catch (error) {
     next(error);
   }
