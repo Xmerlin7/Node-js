@@ -2,6 +2,7 @@ import express from "express";
 import morgan from "morgan";
 
 //Routes Imports
+import adminRouter from "./routes/admin.route.js"
 import teacherRouter from "./routes/teacher.route.js";
 import notFound from "./middleware/notFound.middleware.js";
 const app = express();
@@ -11,7 +12,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 //Routes
-// app.use("/admin", aminRouter);
+app.use("/admin", adminRouter);
 app.use("/teachers", teacherRouter)
 
 //Fall back route
