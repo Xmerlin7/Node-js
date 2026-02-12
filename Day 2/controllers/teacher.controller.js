@@ -1,6 +1,8 @@
-const getAll = (req, res, next) => {
+import Teacher from "../models/teachers.js";
+const getAll = async (req, res, next) => {
   try {
-    throw new Error("تجربة: خطأ متعمد في جلب المدرسين!");
+    let teachers = await Teacher.getAll()
+    res.status(200).json(teachers);
   } catch (error) {
     next(error);
   }
