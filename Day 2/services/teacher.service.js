@@ -14,7 +14,12 @@ export const getTeacherByID = async (id) => {
   if (teacher.length != 1) return null;
   else return teacher;
 };
-export const addTeacher = async ({ name, email, subject, yearsOfExperience }) => {
+export const addTeacher = async ({
+  name,
+  email,
+  subject,
+  yearsOfExperience,
+}) => {
   const data = await Teacher.getAll();
   const list = data.teachers;
 
