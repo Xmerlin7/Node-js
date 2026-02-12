@@ -1,7 +1,7 @@
-import Teacher from "../models/teachers.js";
+import * as teacherService from "../services/teacher.service.js"
 const getAll = async (req, res, next) => {
   try {
-    let teachers = await Teacher.getAll()
+    let teachers = await teacherService.getAll();
     res.status(200).json(teachers);
   } catch (error) {
     next(error);
