@@ -1,35 +1,25 @@
-
 {
-    "teachers": [
-        {
-            "id": 1,
-            "firstName": "Amira",
-            "lastName": "Hassan",
-            "subject": "Mathematics",
-            "email": "amira.hassan@example.com",
-            "phone": "+1-555-0101",
-            "yearsOfExperience": 8,
-            "isActive": true
-        },
-        {
-            "id": 2,
-            "firstName": "Omar",
-            "lastName": "Saleh",
-            "subject": "Computer Science",
-            "email": "omar.saleh@example.com",
-            "phone": "+1-555-0102",
-            "yearsOfExperience": 5,
-            "isActive": true
-        },
-        {
-            "id": 3,
-            "firstName": "Lina",
-            "lastName": "Youssef",
-            "subject": "English",
-            "email": "lina.youssef@example.com",
-            "phone": "+1-555-0103",
-            "yearsOfExperience": 11,
-            "isActive": false
-        }
-    ]
+  "teachers": [
+    {
+      "id": 1,
+      "name": "john doe",
+      "subject": "Mathematics",
+      "email": "amira.hassan@example.com",
+      "yearsOfExperience": 8
+    },
+    {
+      "id": 2,
+      "name": "jane",
+      "subject": "Computer Science",
+      "email": "omar.saleh@example.com",
+      "yearsOfExperience": 5
+    },
+    {
+      "id": 3,
+      "name": "Lina",
+      "subject": "English",
+      "email": "lina.youssef@example.com",
+      "yearsOfExperience": 11
+    }
+  ]
 }
