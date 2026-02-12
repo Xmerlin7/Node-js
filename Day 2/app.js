@@ -5,6 +5,7 @@ import morgan from "morgan";
 import adminRouter from "./routes/admin.route.js"
 import teacherRouter from "./routes/teacher.route.js";
 import notFound from "./middleware/notFound.middleware.js";
+import globalErrorHandler from "./middleware/errorHandling.middleware.js";
 const app = express();
 
 //middleware
@@ -17,4 +18,7 @@ app.use("/teachers", teacherRouter)
 
 //Fall back route
 app.use("/", notFound);
+
+// error handling
+app.use(globalErrorHandler)
 export default app;
