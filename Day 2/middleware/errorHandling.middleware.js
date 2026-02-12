@@ -1,7 +1,7 @@
 export default (err, req, res, next)=>{
     console.log(err);
     const errorCode = err.status || 500
-    const errorMess = err.message || "Internal Server Error"
+    const message = err.message || "Internal Server Error"
     return res
-    .status(errorCode).json({errorMess})
+    .status(errorCode).json({message})
 }
