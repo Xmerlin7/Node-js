@@ -4,8 +4,8 @@ const router = Router();
 
 router.get("/", teacher.getAll).post("/", teacher.addOne);
 router
-  .get("/:d", teacher.getByID)
-  .delete("/:d", teacher.deleteOne)
-  .put("/:d", teacher.updateOne);
+  .get("/:id", teacher.getByID)
+  .delete("/:id", teacher.deleteOne)
+  .put("/:id", teacher.updateOne);
 
 export default router;
