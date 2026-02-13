@@ -1,8 +1,14 @@
-let user = process.env.adminUser;
-let pass = process.env.adminPassword;
 export default (req, res, next) => {
-  let { reqUser, reqPass } = req.body;
+  const user = process.env.adminUser;
+  const pass = process.env.adminPassword;
+
+  const { reqUser, reqPass } = req.body || {};
+  console.log(reqUser, " ", reqPass);
+
+  if (!reqUser || !reqPass)
+    return res.status(400).json({ message: "Missing credentials" });
+
   if (reqUser != user || reqPass != pass)
-    return res.status(403).json({ message: "U are no authorized" });
+    return res.status(403).json({ message: "U are not authorized" });
   next();
 };
