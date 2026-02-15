@@ -1,4 +1,4 @@
-import Teacher from "../models/teachers.js";
+import Teacher from "../repos/teachers.js";
 
 export const getAllTeachers = async () => {
   const teachers = await Teacher.getAll();
