@@ -1,7 +1,8 @@
 import Teacher from "../models/teachers.js";
+import mongoose from "mongoose";
 
 export const getAllTeachers = async () => {
-  const teachers = await Teacher.getAll();
+  const teachers = await Teacher.find().lean();
   if (teachers.length === 0) {
     throw new Error("No teachers in the data set");
   } else {
@@ -9,10 +10,9 @@ export const getAllTeachers = async () => {
   }
 };
 export const getTeacherByID = async (id) => {
-  const teachers = await Teacher.getAll();
-  let teacher = teachers.teachers.filter((i) => i.id == id);
-  if (teacher.length != 1) return null;
-  else return teacher;
+  if (!mongoose.Types.ObjectId.isValid(id)) return null;
+  const teacher = await Teacher.findById(id).lean();
+  return teacher;
 };
 export const addTeacher = async ({
   name,
@@ -20,65 +20,51 @@ export const addTeacher = async ({
   subject,
   yearsOfExperience,
 }) => {
-  const data = await Teacher.getAll();
-  const list = data.teachers;
-
   const normalizedEmail = email.trim().toLowerCase();
 
-  const emailExists = list.some(
-    (t) => t.email.trim().toLowerCase() === normalizedEmail,
-  );
-
+  const emailExists = await Teacher.exists({ email: normalizedEmail });
   if (emailExists) {
     throw new Error("Email already exists");
   }
 
-  // generate id safely
-  const newId = list.length === 0 ? 1 : list[list.length - 1].id + 1;
-
-  const newTeacher = {
-    id: newId,
+  const createdTeacher = await Teacher.create({
     name,
-    email,
+    email: normalizedEmail,
     subject,
     yearsOfExperience,
-  };
+  });
 
-  list.push(newTeacher);
-
-  await Teacher.saveAll(data);
-
-  return newTeacher;
+  return createdTeacher.toObject();
 };
 export const deleteTeacher = async (id) => {
-  const data = await Teacher.getAll();
-  let teachers = data.teachers;
-  let teacher = teachers.find((t) => t.id == id);
-  if (!teacher) throw new Error("this teacher is not in out dataset");
-  let newTeachers = teachers.filter((t) => t.id !== id);
-  await Teacher.saveAll({ teachers: newTeachers });
-  return teacher;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new Error("Invalid teacher id");
+  }
+
+  const deletedTeacher = await Teacher.findByIdAndDelete(id).lean();
+  if (!deletedTeacher) throw new Error("this teacher is not in out dataset");
+  return deletedTeacher;
 };
 export const updateTeacher = async (
   id,
   { name, email, subject, yearsOfExperience },
 ) => {
-  const data = await Teacher.getAll();
-  let teachers = data.teachers;
-  let teacher = teachers.find((t) => t.id == id);
-  if (!teacher) throw new Error("this teacher is not in out dataset");
-  let newTData = {
-    id,
-    name,
-    email,
-    subject,
-    yearsOfExperience,
-  };
-  for (let i = 0; i < teachers.length; i++) {
-    if (teacher.id == teachers[i].id) {
-      teachers[i] = newTData;
-    }
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new Error("Invalid teacher id");
   }
-  await Teacher.saveAll({ teachers });
-  return newTData;
+
+  const update = {};
+  if (name !== undefined) update.name = name;
+  if (subject !== undefined) update.subject = subject;
+  if (yearsOfExperience !== undefined)
+    update.yearsOfExperience = yearsOfExperience;
+  if (email !== undefined) update.email = email.trim().toLowerCase();
+
+  const updatedTeacher = await Teacher.findByIdAndUpdate(id, update, {
+    new: true,
+    runValidators: true,
+  }).lean();
+
+  if (!updatedTeacher) throw new Error("this teacher is not in out dataset");
+  return updatedTeacher;
 };
