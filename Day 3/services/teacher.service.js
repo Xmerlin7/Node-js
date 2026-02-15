@@ -1,5 +1,4 @@
 import Teacher from "../models/teachers.js";
-import mongoose from "mongoose";
 
 export const getAllTeachers = async () => {
   const teachers = await Teacher.find().lean();
@@ -10,11 +9,11 @@ export const getAllTeachers = async () => {
   }
 };
 export const getTeacherByID = async (id) => {
-  if (!mongoose.Types.ObjectId.isValid(id)) return null;
-  const teacher = await Teacher.findById(id).lean();
+  const teacher = await Teacher.findById(Number(id)).lean();
   return teacher;
 };
 export const addTeacher = async ({
+  _id,
   name,
   email,
   subject,
@@ -28,6 +27,7 @@ export const addTeacher = async ({
   }
 
   const createdTeacher = await Teacher.create({
+    _id,
     name,
     email: normalizedEmail,
     subject,
@@ -37,11 +37,7 @@ export const addTeacher = async ({
   return createdTeacher.toObject();
 };
 export const deleteTeacher = async (id) => {
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    throw new Error("Invalid teacher id");
-  }
-
-  const deletedTeacher = await Teacher.findByIdAndDelete(id).lean();
+  const deletedTeacher = await Teacher.findByIdAndDelete(Number(id)).lean();
   if (!deletedTeacher) throw new Error("this teacher is not in out dataset");
   return deletedTeacher;
 };
@@ -49,10 +45,6 @@ export const updateTeacher = async (
   id,
   { name, email, subject, yearsOfExperience },
 ) => {
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    throw new Error("Invalid teacher id");
-  }
-
   const update = {};
   if (name !== undefined) update.name = name;
   if (subject !== undefined) update.subject = subject;
@@ -60,7 +52,7 @@ export const updateTeacher = async (
     update.yearsOfExperience = yearsOfExperience;
   if (email !== undefined) update.email = email.trim().toLowerCase();
 
-  const updatedTeacher = await Teacher.findByIdAndUpdate(id, update, {
+  const updatedTeacher = await Teacher.findByIdAndUpdate(Number(id), update, {
     new: true,
     runValidators: true,
   }).lean();
