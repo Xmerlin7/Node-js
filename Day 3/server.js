@@ -6,11 +6,11 @@ dotenv.config();
 const PORT = Number(process.env.PORT) || 3000;
 
 try {
-	await connectDB();
-	app.listen(PORT, () => {
-		console.log(`Server listening on port ${PORT}`);
-	});
+  await connectDB();
+  app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
+  });
 } catch (err) {
-	console.error(err);
-	process.exit(1);
+  console.error(err);
+  process.exit(1);
 }

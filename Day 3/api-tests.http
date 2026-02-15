@@ -1,7 +1,7 @@
 @baseUrl = http://localhost:{{port}}
 @port = 8080
 
-### Admin (just a sample)
+### Admin
 POST {{baseUrl}}/admin
 Content-Type: application/json
 
@@ -15,11 +15,11 @@ POST {{baseUrl}}/teachers
 Content-Type: application/json
 
 {
-  "_id": 1,
-  "name": "Ali Ahmed",
-  "email": "ali@test.com",
-  "subject": "Math",
-  "yearsOfExperience": 3
+  "_id": 2,
+  "name": "Seif Ahmed",
+  "email": "seif@test.com",
+  "subject": "cs",
+  "yearsOfExperience": 5
 }
 
 ### 2) Get all teachers
@@ -48,10 +48,10 @@ POST {{baseUrl}}/child
 Content-Type: application/json
 
 {
-  "_id": 10,
-  "fullName": "Mona Salah",
+  "_id": 1,
+  "fullName": "Mozn Ahmed",
   "age": 5,
-  "level": "KG1",
+  "level": "KG2",
   "address": {
     "city": "Cairo",
     "street": "Tahrir",
