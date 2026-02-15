@@ -1,0 +1,121 @@
+@baseUrl = http://localhost:{{port}}
+@port = 8080
+
+### Admin (just a sample)
+POST {{baseUrl}}/admin
+Content-Type: application/json
+
+{}
+
+
+### -------------------- Teachers --------------------
+
+### 1) Add teacher
+POST {{baseUrl}}/teachers
+Content-Type: application/json
+
+{
+  "_id": 1,
+  "name": "Ali Ahmed",
+  "email": "ali@test.com",
+  "subject": "Math",
+  "yearsOfExperience": 3
+}
+
+### 2) Get all teachers
+GET {{baseUrl}}/teachers
+
+### 3) Get teacher by id
+GET {{baseUrl}}/teachers/1
+
+### 4) Update teacher by id
+PUT {{baseUrl}}/teachers/1
+Content-Type: application/json
+
+{
+  "name": "Ali Updated",
+  "yearsOfExperience": 5
+}
+
+### 5) Delete teacher by id
+DELETE {{baseUrl}}/teachers/1
+
+
+### -------------------- Children --------------------
+
+### 1) Add child
+POST {{baseUrl}}/child
+Content-Type: application/json
+
+{
+  "_id": 10,
+  "fullName": "Mona Salah",
+  "age": 5,
+  "level": "KG1",
+  "address": {
+    "city": "Cairo",
+    "street": "Tahrir",
+    "building": "12"
+  }
+}
+
+### 2) Get all children
+GET {{baseUrl}}/child
+
+### 3) Get child by id
+GET {{baseUrl}}/child/10
+
+### 4) Update child by id
+PUT {{baseUrl}}/child/10
+Content-Type: application/json
+
+{
+  "age": 6,
+  "level": "KG2",
+  "address": {
+    "city": "Giza",
+    "street": "Pyramids",
+    "building": "7"
+  }
+}
+
+### 5) Delete child by id
+DELETE {{baseUrl}}/child/10
+
+
+### -------------------- Classes --------------------
+
+### 1) Add class (supervisor is teacher id, children is array of child ids)
+POST {{baseUrl}}/class
+Content-Type: application/json
+
+{
+  "_id": 100,
+  "name": "A1",
+  "supervisor": 1,
+  "children": [10]
+}
+
+### 2) Get all classes
+GET {{baseUrl}}/class
+
+### 3) Get class by id
+GET {{baseUrl}}/class/100
+
+### 4) Update class by id
+PUT {{baseUrl}}/class/100
+Content-Type: application/json
+
+{
+  "name": "A1 Updated",
+  "children": [10]
+}
+
+### 5) Delete class by id
+DELETE {{baseUrl}}/class/100
+
+### 6) Get class children (returns full child docs)
+GET {{baseUrl}}/classchildern/100
+
+### 7) Get class supervisor teacher (returns full teacher doc)
+GET {{baseUrl}}/classTeacher/100
