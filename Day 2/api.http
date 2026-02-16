@@ -1,0 +1,71 @@
+@host = http://localhost
+@port = 8080
+@baseUrl = {{host}}:{{port}}
+
+
+@adminUser = admin
+@adminPass = admin
+
+### Admin 
+POST {{baseUrl}}/admin
+Content-Type: application/json
+
+{
+  "reqUser": "{{adminUser}}",
+  "reqPass": "{{adminPass}}"
+}
+
+### Get all teachers 
+GET {{baseUrl}}/teachers
+Content-Type: application/json
+
+{
+  "reqUser": "{{adminUser}}",
+  "reqPass": "{{adminPass}}"
+}
+
+### Get teacher by id
+GET {{baseUrl}}/teachers/1
+Content-Type: application/json
+
+{
+  "reqUser": "{{adminUser}}",
+  "reqPass": "{{adminPass}}"
+}
+
+### Add teacher
+POST {{baseUrl}}/teachers
+Content-Type: application/json
+
+{
+  "reqUser": "{{adminUser}}",
+  "reqPass": "{{adminPass}}",
+
+  "name": "New Teacher",
+  "email": "new.teacher@example.com",
+  "subject": "Computer Science",
+  "yearsOfExperience": 3
+}
+
+### Update teacher
+PUT {{baseUrl}}/teachers/1
+Content-Type: application/json
+
+{
+  "reqUser": "{{adminUser}}",
+  "reqPass": "{{adminPass}}",
+
+  "name": "Updated Name",
+  "email": "amira.hassan@example.com",
+  "subject": "Mathematics",
+  "yearsOfExperience": 9
+}
+
+### Delete teacher
+DELETE {{baseUrl}}/teachers/2
+Content-Type: application/json
+
+{
+  "reqUser": "{{adminUser}}",
+  "reqPass": "{{adminPass}}"
+}

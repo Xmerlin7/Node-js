@@ -1,11 +1,14 @@
 @baseUrl = http://localhost:{{port}}
-@port = 8080
-
+@port = 3000
+@adminUser = admin
+@adminPassword = admin
 ### Admin
 POST {{baseUrl}}/admin
 Content-Type: application/json
 
-{}
+{"reqUser": "admin", 
+  "reqPass": "admin"
+}
 
 
 ### -------------------- Teachers --------------------
@@ -26,7 +29,7 @@ Content-Type: application/json
 GET {{baseUrl}}/teachers
 
 ### 3) Get teacher by id
-GET {{baseUrl}}/teachers/1
+GET {{baseUrl}}/teachers/2
 
 ### 4) Update teacher by id
 PUT {{baseUrl}}/teachers/1
@@ -107,7 +110,7 @@ PUT {{baseUrl}}/class/100
 Content-Type: application/json
 
 {
-  "name": "A1 Updated",
+  "name": "A1 Updated 2",
   "children": [10]
 }
 
