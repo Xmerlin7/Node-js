@@ -1,4 +1,3 @@
-import category from "../models/category.js";
 import productSer from "../models/product.js";
 
 export const create = async (data) => {
