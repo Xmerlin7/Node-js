@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import user from "../models/user.js";
 
 export const create = async (data) => {
-  try {
+
     let hashedPassword = await bcrypt.hash(data.password, 10);
     let userDTO = {
       name: data.name,
@@ -12,15 +12,11 @@ export const create = async (data) => {
     };
     let userCreated = await user.create(userDTO);
     return userCreated;
-  } catch (err) {
-    throw err;
-  }
+
 };
 export const getAll = async () => {
-  try {
+
     let users = await user.find();
     return users;
-  } catch (err) {
-    throw err;
-  }
+
 };
