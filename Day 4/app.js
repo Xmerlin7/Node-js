@@ -16,7 +16,7 @@ app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/api/", accRouter);
+app.use("/api", accRouter);
 app.use("/api/users", userRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/products", productRouter);
