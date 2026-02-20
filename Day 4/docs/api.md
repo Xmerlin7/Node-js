@@ -91,6 +91,50 @@ Fields (see `models/user.js`):
 
 # Endpoints
 
+## Authentication
+
+### Register
+
+- **POST** `/api/register`
+
+Request body:
+
+```json
+{
+  "name": "Merlin",
+  "email": "merlin@example.com",
+  "password": "secret123",
+  "role": "user"
+}
+```
+
+Response: `200`
+
+### Login
+
+- **POST** `/api/login`
+
+Request body:
+
+```json
+{
+  "email": "merlin@example.com",
+  "password": "secret123"
+}
+```
+
+Response: `200`
+
+- Sets an HttpOnly cookie: `refreshToken`
+- Returns JSON including an access token:
+
+```json
+{
+  "message": "Hi Merlin U loggedIn successfully!",
+  "token": "<accessToken>"
+}
+```
+
 ## Users
 
 ### Create user

@@ -8,6 +8,12 @@ export const createOne = async (req, res, next) => {
     next(error);
   }
 };
+export const getUser = async (req, res, next) => {
+  try {
+  } catch (error) {
+    next(error);
+  }
+};
 export const getAllUsers = async (req, res, next) => {
   try {
     let users = await userService.getAll(req.body);

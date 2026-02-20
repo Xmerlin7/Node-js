@@ -16,6 +16,8 @@ The repo already includes a `.env` with defaults:
 
 - `PORT=8080`
 - `DB_URI=mongodb://localhost:27017/ecommerce`
+- `ACCESS_TOKEN_SECRET=...` (required for `/api/login`)
+- `REFRESH_TOKEN_SECRET=...` (required for `/api/login`)
 
 3. Run
 
