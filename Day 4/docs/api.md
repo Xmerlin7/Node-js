@@ -16,6 +16,15 @@
 
 - `PORT` (default in repo: `8080`)
 - `DB_URI` (default in repo: `mongodb://localhost:27017/ecommerce`)
+- `ACCESS_TOKEN_SECRET` (required for JWT access tokens)
+- `REFRESH_TOKEN_SECRET` (required for JWT refresh tokens)
+
+## Auth Overview
+
+This API uses **JWT Bearer tokens** for protected routes.
+
+- Send header: `Authorization: Bearer <accessToken>`
+- Login also sets an HttpOnly `refreshToken` cookie (used by refresh/logout)
 
 ## Standard Response Shape
 
@@ -41,6 +50,8 @@ Cart endpoints currently use `Message` (capital M) in some responses.
 }
 ```
 
+Note: current validation middleware returns `"Validation Error"` as the message.
+
 - Duplicate key errors (MongoDB `11000`): `400`
   - Response is an array of strings like:
 
@@ -58,7 +69,7 @@ Cart endpoints currently use `Message` (capital M) in some responses.
 
 ---
 
-# Data Models (MongoDB)
+## Data Models (MongoDB)
 
 ## User
 
@@ -89,7 +100,7 @@ Fields (see `models/user.js`):
 
 ---
 
-# Endpoints
+## Endpoints
 
 ## Authentication
 
@@ -135,7 +146,38 @@ Response: `200`
 }
 ```
 
+### Me (current user)
+
+- **GET** `/api/me`
+- **Auth required:** `Authorization: Bearer <accessToken>`
+
+Response: `200`
+
+### Refresh access token
+
+- **POST** `/api/refresh`
+- **Cookie required:** `refreshToken`
+
+Response: `200`
+
+```json
+{
+  "message": "U refreshed successfully!",
+  "data": "<newAccessToken>"
+}
+```
+
+### Logout
+
+- **POST** `/api/logout`
+- **Auth required:** `Authorization: Bearer <accessToken>`
+- **Cookie required:** `refreshToken`
+
+Response: `200`
+
 ## Users
+
+Auth: **Admin only**
 
 ### Create user
 
@@ -195,6 +237,11 @@ Response: `200`
 
 ## Categories
 
+Auth:
+
+- `POST /api/category`: **Admin only**
+- `GET /api/category/:id/products`: public
+
 ### Create category
 
 - **POST** `/api/category`
@@ -221,6 +268,11 @@ Response: `201`
 ---
 
 ## Products
+
+Auth:
+
+- `POST /api/products`: **Admin only**
+- `GET /api/products` and `GET /api/products/:id`: public
 
 ### Create product
 
@@ -287,6 +339,11 @@ Response: `200`
 
 All cart routes are scoped to a user id in the URL.
 
+Auth required for all cart routes.
+
+- Admin can access any cart
+- Normal user can only access their own cart (the `:userId` must match the token `userId`)
+
 ### Add to cart
 
 - **POST** `/api/carts/user/:userId`
@@ -350,3 +407,11 @@ Response: `200`
   }
 }
 ```
+
+---
+
+## Testing
+
+For a ready-made request collection, use the VS Code REST Client file:
+
+- `api.http`
